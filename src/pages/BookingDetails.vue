@@ -1,6 +1,7 @@
 <script setup>
+
 </script>
 
 <template>
-  <router-view />
+    Booking Details
 </template>
