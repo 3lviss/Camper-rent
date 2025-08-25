@@ -4,3 +4,5 @@ import { routes } from './routes'
 export function createAppRouter(history = createWebHistory()) {
   return createRouter({ history, routes })
 }
+
+export { routes }
