@@ -14,5 +14,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@pages': path.resolve(__dirname, './src/pages'),
     },
-  }
+  },
+  test: {
+        environment: 'jsdom',     // 👈 ključ
+        globals: true,
+        // opcionalno: setup fajl, coverage itd.
+        // setupFiles: ['./src/tests/setup.js'],
+    },
 })
