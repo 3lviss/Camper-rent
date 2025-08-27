@@ -4,7 +4,7 @@ import { createAppRouter } from '@/router'
 import { routes } from '@/router/routes'
 
 function makeTestRouter() {
-  return createAppRouter(createMemoryHistory())
+    return createAppRouter(createMemoryHistory())
 }
 
 describe('router config', () => {

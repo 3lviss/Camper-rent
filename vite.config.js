@@ -5,20 +5,18 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    tailwindcss(),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@pages': path.resolve(__dirname, './src/pages'),
+    plugins: [
+        vue(),
+        tailwindcss(),
+    ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src'),
+            '@pages': path.resolve(__dirname, './src/pages'),
+        },
     },
-  },
-  test: {
-        environment: 'jsdom',     // 👈 ključ
+    test: {
+        environment: 'jsdom',
         globals: true,
-        // opcionalno: setup fajl, coverage itd.
-        // setupFiles: ['./src/tests/setup.js'],
     },
 })

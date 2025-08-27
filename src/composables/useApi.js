@@ -17,38 +17,38 @@ export function useApi({
     defaultHeaders = { Accept: 'application/json' }, 
     defaultCache = 'no-store', 
 } = {}) {
-  async function request(path, options = {}) {
-    const url = baseURL + path
-    const headers = { ...defaultHeaders, ...(options.headers || {}) }
-    const cache = options.cache ?? defaultCache
+    async function request(path, options = {}) {
+        const url = baseURL + path
+        const headers = { ...defaultHeaders, ...(options.headers || {}) }
+        const cache = options.cache ?? defaultCache
 
-    let res;
-    try {
-       res = await fetch(url, { ...options, headers, cache })
-    } catch (e) {
-        throw makeApiError({
-            status: -1,
-            message: e?.message,
-        })
+        let res;
+        try {
+            res = await fetch(url, { ...options, headers, cache })
+        } catch (e) {
+            throw makeApiError({
+                status: -1,
+                message: e?.message,
+            })
+        }
+
+        const ct = res.headers.get('content-type') || ''
+        const isJson = ct.includes('application/json')
+
+        const body = res.status === 204
+            ? null
+            : (isJson ? await res.json().catch(() => null) : await res.text().catch(() => ''))
+
+        if (!res.ok) {
+            throw makeApiError({
+                status: res.status,
+                message: statusMessage(res.status, res.statusText),
+            })
+        }
+        return body
     }
 
-    const ct = res.headers.get('content-type') || ''
-    const isJson = ct.includes('application/json')
+    const get = (path, options) => request(path, { ...options, method: 'GET' })
 
-    const body = res.status === 204
-        ? null
-        : (isJson ? await res.json().catch(() => null) : await res.text().catch(() => ''))
-
-    if (!res.ok) {
-        throw makeApiError({
-            status: res.status,
-            message: statusMessage(res.status, res.statusText),
-        })
-    }
-    return body
-  }
-
-  const get  = (path, options) => request(path, { ...options, method: 'GET' })
-
-  return { request, get }
+    return { request, get }
 }
