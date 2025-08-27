@@ -5,6 +5,7 @@ export const useStationsStore = defineStore('stations', {
         selectedStationId: null,
         selectedWeekStartISO: null, // (ISO date of Monday)
         bookings: {}, // { stationId: [bookings] }
+        stations: {}, // { stationId: stationData }
         loading: false,
         error: null
     }),
@@ -23,14 +24,25 @@ export const useStationsStore = defineStore('stations', {
             this.selectedWeekStartISO = d.toISOString()
         },
         
-        // Set bookings for a station
         setBookings(stationId, bookings) {
             this.bookings[stationId] = bookings
         },
-        
-        // Get bookings for a station
+
         getBookings(stationId) {
             return this.bookings[stationId] || []
+        },
+
+        setStation(stationId, stationData) {
+            this.stations[stationId] = stationData
+        },
+
+        getStation(stationId) {
+            return this.stations[stationId] || null
+        },
+        
+        getStationName(stationId) {
+            const station = this.stations[stationId]
+            return station?.name || 'Unknown Station'
         },
         
         // Reschedule booking

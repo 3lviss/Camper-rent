@@ -56,6 +56,7 @@ const onSelect = async (station) => {
     selectedStation.value = station
     selectedStationName.value = station?.name ?? ''
     stations.setSelectedStationId(station?.id ?? null)
+    stations.setStation(station.id, station)
     
     // Load bookings for the selected station
     await loadBookings(station.id)
